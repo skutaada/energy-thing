@@ -1,9 +1,7 @@
-import { integer, pgTableCreator, text } from "drizzle-orm/pg-core";
+import { int, text, sqliteTable } from "drizzle-orm/sqlite-core";
 
-export const createTable = pgTableCreator((name) => `energy-thing_${name}`);
-
-export const energyTable = createTable("energy_table", {
-  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+export const energyTable = sqliteTable("energy_table", {
+  id: int("id").primaryKey({ autoIncrement: true }),
   date: text("date").notNull().unique(),
-  value: integer("value").notNull(),
+  value: int("value").notNull(),
 });
