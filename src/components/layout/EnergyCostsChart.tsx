@@ -17,10 +17,12 @@ import {
   YAxis,
 } from "recharts";
 
-const formatXAxis = (tickItem: Date) => {
-  return tickItem.toLocaleTimeString("en-AT", {
+const formatXAxis = (tickItem: string) => {
+  const date = new Date(tickItem);
+  return date.toLocaleTimeString("en-AT", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: "Europe/Vienna",
   });
 };
 

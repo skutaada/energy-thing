@@ -1,9 +1,9 @@
-import { integer, pgTableCreator, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTableCreator, text } from "drizzle-orm/pg-core";
 
 export const createTable = pgTableCreator((name) => `energy-thing_${name}`);
 
 export const energyTable = createTable("energy_table", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  date: timestamp("date", { withTimezone: true }).notNull(),
+  date: text("date").notNull(),
   value: integer("value").notNull(),
 });

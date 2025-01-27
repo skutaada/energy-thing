@@ -1,7 +1,7 @@
 import type { EnergyData } from "../dto/EnergyData";
 import { db } from ".";
 import { energyTable } from "./schema";
-import { between } from "drizzle-orm";
+import { like } from "drizzle-orm";
 
 export async function createEnergyData(data: EnergyData[]) {
   try {
@@ -16,15 +16,10 @@ export async function createEnergyData(data: EnergyData[]) {
   }
 }
 
-export async function getEnergyDataByDate(date: Date) {
-  const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
-
-  const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
-
-  return await db
+export async function getEnergyDataByDate(date: string): Promise<EnergyData[]> {
+  const data = await db
     .select()
     .from(energyTable)
-    .where(between(energyTable.date, startOfDay, endOfDay));
+    .where(like(energyTable.date, `${date}%`));
+  return data;
 }
