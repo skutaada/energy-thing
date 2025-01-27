@@ -62,7 +62,7 @@ export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
               <XAxis
                 dataKey="date"
                 tickFormatter={formatXAxis}
-                interval={isMobile ? 23 : 10}
+                interval={isMobile ? 16 : 10}
                 stroke="#888888"
                 fontSize={12}
                 tickLine={false}
@@ -70,13 +70,15 @@ export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
                 angle={isMobile ? -15 : 0}
                 height={isMobile ? 80 : 50}
               />
-              <YAxis
-                stroke="#888888"
-                fontSize={12}
-                tickLine={false}
-                tickFormatter={(value) => `${(value / 1000).toFixed(2)}ct`}
-                width={50}
-              />
+              {!isMobile && (
+                <YAxis
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  tickFormatter={(value) => `${(value / 1000).toFixed(2)}ct`}
+                  width={50}
+                />
+              )}
               <Tooltip
                 content={({ active, payload }) => {
                   if (active && payload?.[0]) {
