@@ -40,7 +40,7 @@ export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
               <XAxis
                 dataKey="date"
                 tickFormatter={formatXAxis}
-                interval={7}
+                interval={8}
                 stroke="#888888"
                 fontSize={12}
                 tickLine={false}
@@ -57,18 +57,18 @@ export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
                   if (active && payload?.[0]) {
                     const data = payload[0].payload as EnergyData;
                     return (
-                      <div className="bg-background rounded-lg border p-2 shadow-sm">
+                      <div className="rounded-lg border bg-background p-2 shadow-sm">
                         <div className="grid grid-cols-2 gap-2">
                           <div className="flex flex-col">
-                            <span className="text-muted-foreground text-[0.70rem] uppercase">
+                            <span className="text-[0.70rem] uppercase text-muted-foreground">
                               Time
                             </span>
-                            <span className="text-muted-foreground font-bold">
+                            <span className="font-bold text-muted-foreground">
                               {formatXAxis(data.date)}
                             </span>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-muted-foreground text-[0.70rem] uppercase">
+                            <span className="text-[0.70rem] uppercase text-muted-foreground">
                               Cost
                             </span>
                             <span className="font-bold">
