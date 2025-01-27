@@ -5,17 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import EnergyCostsChart from "./EnergyCostsChart";
 import { getEnergyDataByDate } from "~/server/db/crud";
-
-export const formatXAxis = (tickItem: string) => {
-  const date = new Date(tickItem);
-  return date.toLocaleTimeString("en-AT", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "Europe/Vienna",
-  });
-};
+import EnergyCostChart from "./EnergyCostChart";
 
 export default async function EnergyCostCard({ date }: { date: Date }) {
   const data = await getEnergyDataByDate(date.toISOString().split("T")[0]!);
@@ -29,7 +20,7 @@ export default async function EnergyCostCard({ date }: { date: Date }) {
       </CardHeader>
       <CardContent>
         {data.length > 0 ? (
-          <EnergyCostsChart data={data} />
+          <EnergyCostChart data={data} />
         ) : (
           <h2 className="text-center text-xl font-bold sm:text-2xl md:text-3xl">
             No data available for this date

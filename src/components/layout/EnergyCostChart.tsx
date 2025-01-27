@@ -20,7 +20,7 @@ const formatXAxis = (tickItem: string) => {
   });
 };
 
-export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
+export default function EnergyCostChart({ data }: { data: EnergyData[] }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
