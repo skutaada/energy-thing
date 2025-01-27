@@ -16,6 +16,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useEffect, useState } from "react";
 
 const formatXAxis = (tickItem: string) => {
   const date = new Date(tickItem);
@@ -27,6 +28,17 @@ const formatXAxis = (tickItem: string) => {
 };
 
 export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -36,23 +48,34 @@ export default function EnergyCostsChart({ data }: { data: EnergyData[] }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="h-[400px]">
+        <div className={isMobile ? "h-[500px]" : "h-[400px]"}>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
+            <LineChart
+              data={data}
+              margin={{
+                top: 5,
+                right: 10,
+                left: 10,
+                bottom: 5,
+              }}
+            >
               <XAxis
                 dataKey="date"
                 tickFormatter={formatXAxis}
-                interval={8}
+                interval={isMobile ? 23 : 10}
                 stroke="#888888"
                 fontSize={12}
                 tickLine={false}
                 padding={{ left: 10, right: 10 }}
+                angle={isMobile ? -15 : 0}
+                height={isMobile ? 80 : 50}
               />
               <YAxis
                 stroke="#888888"
                 fontSize={12}
                 tickLine={false}
                 tickFormatter={(value) => `${(value / 1000).toFixed(2)}ct`}
+                width={50}
               />
               <Tooltip
                 content={({ active, payload }) => {
