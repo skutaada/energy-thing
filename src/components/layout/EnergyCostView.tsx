@@ -1,11 +1,11 @@
-import { getEnergyDataByDate } from "~/server/db/crud";
-import EnergyCostsChart from "./EnergyCostsChart";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Suspense } from "react";
+import EnergyCostCard from "./EnergyCostCard";
+import { Skeleton } from "../ui/skeleton";
 
 export default async function EnergyCostView({ date }: { date: Date }) {
-  const data = await getEnergyDataByDate(date.toISOString().split("T")[0]!);
   const previousDate = new Date(date.getTime() - 86400000)
     .toISOString()
     .split("T")[0];
@@ -33,13 +33,11 @@ export default async function EnergyCostView({ date }: { date: Date }) {
             </Button>
           </Link>
         </div>
-        {data.length > 0 ? (
-          <EnergyCostsChart data={data} />
-        ) : (
-          <h2 className="mb-4 text-center text-xl font-bold sm:text-2xl md:text-3xl">
-            No data available for this date
-          </h2>
-        )}
+        <Suspense
+          fallback={<Skeleton className="h-[512px] w-full rounded-xl" />}
+        >
+          <EnergyCostCard date={date} />
+        </Suspense>
       </div>
     </main>
   );
